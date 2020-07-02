@@ -12,8 +12,7 @@ function throtlle(fn, time) {
 
 
 function throtlleDecorator(target, key, descriptor) {
-  // console.log(1, target, key, descriptor)
-  console.log(descriptor)
+  console.log(1, target, key, descriptor)
   const fn = descriptor.value
   descriptor.value = throtlle(fn)
   return descriptor
@@ -21,6 +20,9 @@ function throtlleDecorator(target, key, descriptor) {
 
 function classDecorator(target, key, descriptor) {
   console.log(2, target, key, descriptor)
+  target.prototype.say = function() {
+      console.log('say hi')
+  }
   return descriptor
 }
 
@@ -31,3 +33,6 @@ class A {
     console.log('sec')
   }
 }
+
+const inst = new A()
+inst.say()
