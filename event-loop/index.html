@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<style>
+    .box{
+        background: #000;
+        width: 0;
+        height: 100px;
+    }
+</style>
+<script>
+    // const el = document.querySelector('.box')
+    // function move(posX) {
+    //     el.style.width = `${posX}px`
+    // }
+    // function delay(time) {
+    //     const now = Date.now()
+    //     while(now + time > Date.now()) {}
+    // }
+    // let count = 0
+    // const fn = () => {
+    //     move(count)
+    //     count += 5
+    //     requestAnimationFrame(fn)
+    // }
+
+    // fn()
+</script>
+<script>
+    console.log('start')
+    const mc = new MessageChannel()
+    mc.port1.onmessage = (e) => {
+        console.log('next macro', e.data)
+    }
+
+    Promise.resolve().then(() => {
+        console.log('promise')
+    })
+
+    requestAnimationFrame(() => {
+        console.log('rAF')
+    })
+
+    mc.port2.postMessage(0)
+    setTimeout(() => {
+        console.log('timeout')
+        mc.port2.postMessage(1)
+    }, 15)
+
+    requestIdleCallback((deadline) => {
+        console.log(deadline.timeRemaining())
+    })
+</script>
+</html>
